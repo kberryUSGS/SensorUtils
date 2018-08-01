@@ -1,6 +1,12 @@
 language: cpp
 
-os: linux
+os: 
+  - linux
+  - osx
+
+compiler:
+  - gcc
+  - clang
 
 addons:
   apt:
@@ -10,5 +16,5 @@ addons:
       - g++-6
 
 script:
-  - CXX=/usr/bin/g++-6 CC=/usr/bin/gcc-6 cmake .
-  - cmake --build .
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then CXX=/usr/bin/clang CC=/usr/bin/clang cmake .; cmake --build .; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then CXX=/usr/bin/g++-6 CC=/usr/bin/gcc-6 cmake .; cmake --build .; fi
