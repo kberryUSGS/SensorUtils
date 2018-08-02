@@ -9,12 +9,17 @@ matrix:
             - ubuntu-toolchain-r-test
           packages:
            - g++-6
-      env: COMPILER_NAME=gcc CXX=g++-6 CC=gcc-6
+      env:
+        - MATRIX_EVAL="CXX=g++-6 && CC=gcc-6"
     - os: osx
       osx_image: xcode9.4
       compiler:
         - clang
-      env: COMPILER_NAME=clang CXX=clang++ CC=clang
+      env: 
+        - MATRIX_EVAL="CXX=clang++ && CC=clang"
+
+before_install:
+  - eval "${MATRIX_EVAL}"
 
 script:
   - cmake .
