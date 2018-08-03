@@ -19,7 +19,10 @@ matrix:
 
 before_install:
   - eval "${MATRIX_EVAL}"
-  - pip install --user cpp-coveralls
+  - |
+    if [ "$TRAVIS_OS_NAME" == "linux" ]; then
+      pip install --user cpp-coveralls;
+    fi
 
 install:
   # Install a supported cmake version (>= 3.10)
@@ -38,8 +41,10 @@ script:
   - cd build
   - cmake -DCOVERAGE=ON ..
   - cmake --build .
-  - ctest
- 
+
 after_success:
-  - cd build
-  - coveralls --root `dirname $PWD` -i src -E ".*gtest" --verbose
+  - ctest
+  - |
+    if [ "$TRAVIS_OS_NAME" == linux ]; then
+      coveralls --root $(dirname $PWD) -i src --verbose;
+    fi

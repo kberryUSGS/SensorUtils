@@ -7,8 +7,15 @@ include(GoogleTest)
 
 set(CMAKE_CXX_STANDARD 11)
 
+set(COVERAGE OFF CACHE BOOL "Coverage")
+
 add_library(sensorutils SHARED
             src/SensorUtils.cpp)
+
+if(COVERAGE)
+    target_compile_options(sensorutils PRIVATE --coverage -O0)
+    target_link_libraries(sensorutils PRIVATE --coverage -O0)
+endif()
 
 set_target_properties(sensorutils PROPERTIES
     VERSION ${PROJECT_VERSION}
@@ -25,7 +32,7 @@ target_include_directories(sensorutils
 
 find_package (Threads)
 
-target_link_libraries(sensorutils
+target_link_libraries(sensorutils PUBLIC
                       gtest ${CMAKE_THREAD_LIBS_INIT})
 
 install(TARGETS sensorutils
