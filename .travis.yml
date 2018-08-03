@@ -1,14 +1,50 @@
 language: cpp
+sudo: true
 
-os: linux
+matrix:
+  include:
+    - os: linux
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-6
+      env:
+        - MATRIX_EVAL="CXX=g++-6 && CC=gcc-6"
+    - os: osx
+      osx_image: xcode9.4
+      env: 
+        - MATRIX_EVAL="CXX=clang++ && CC=clang"
 
-addons:
-  apt:
-    sources:
-      - ubuntu-toolchain-r-test
-    packages:
-      - g++-6
+before_install:
+  - eval "${MATRIX_EVAL}"
+  - |
+    if [ "$TRAVIS_OS_NAME" == "linux" ]; then
+      pip install --user cpp-coveralls;
+    fi
+
+install:
+  # Install a supported cmake version (>= 3.10)
+  - |
+    if [ "$TRAVIS_OS_NAME" == "linux" ]; then
+      wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh;
+    else
+      curl -o miniconda.sh  https://repo.continuum.io/miniconda/Miniconda3-latest-MacOSX-x86_64.sh;
+    fi
+  - bash miniconda.sh -b -p $HOME/miniconda
+  - export PATH="$HOME/miniconda/bin:$PATH"
+  - conda install -y -c conda-forge cmake
 
 script:
-  - CXX=/usr/bin/g++-6 CC=/usr/bin/gcc-6 cmake .
+  - mkdir build
+  - cd build
+  - cmake -DCOVERAGE=ON ..
   - cmake --build .
+
+after_success:
+  - ctest
+  - |
+    if [ "$TRAVIS_OS_NAME" == linux ]; then
+      coveralls --root $(dirname $PWD) -i src --verbose;
+    fi
