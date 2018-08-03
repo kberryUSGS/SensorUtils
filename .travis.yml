@@ -19,6 +19,7 @@ matrix:
 
 before_install:
   - eval "${MATRIX_EVAL}"
+  - pip install --user cpp-coveralls
 
 install:
   # Install a supported cmake version (>= 3.10)
@@ -33,7 +34,12 @@ install:
   - conda install -y -c conda-forge cmake
 
 script:
-  - cmake --version
-  - cmake .
+  - mkdir build
+  - cd build
+  - cmake -DCOVERAGE=ON ..
   - cmake --build .
   - ctest
+ 
+after_success:
+  - cd build
+  - coveralls --root `dirname $PWD` -i src -E ".*gtest" --verbose
