@@ -20,9 +20,9 @@ double PhaseAngle(vector<double>& instrumentPosition,vector<double>& sunPosition
  * @return The angle of emission (in radians)
  */
 
-double EmissionAngle(const std::vector<double>  &observerBodyFixedPosition,
-                     const std::vector<double> &groundPtIntersection,
-                     const std::vector<double> &surfaceNormal) {
+double EmissionAngle(const vector<double>  &observerBodyFixedPosition,
+                     const vector<double> &groundPtIntersection,
+                     const vector<double> &surfaceNormal) {
 
   arma::dvec surfacePoint(groundPtIntersection);
   arma::dvec surfacePointNormal(surfaceNormal);

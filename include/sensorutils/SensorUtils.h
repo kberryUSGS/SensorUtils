@@ -5,8 +5,8 @@
 using namespace std;
 
 double PhaseAngle(vector<double> & instPosition, vector<double> & sunPosition);
-double EmissionAngle(const std::vector<double>  &observerBodyFixedPosition,
-                     const std::vector<double> &groundPtIntersection,
-                     const std::vector<double> &surfaceNormal);
+double EmissionAngle(const vector<double>  &observerBodyFixedPosition,
+                     const vector<double> &groundPtIntersection,
+                     const vector<double> &surfaceNormal);
 
 #endif
