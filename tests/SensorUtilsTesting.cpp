@@ -12,6 +12,21 @@ TEST(SensorUtils, EmissionAngle) {
    vector<double> groundPtIntersection2{0.0,0.0,0.0};
    vector<double> surfaceNormal2{0.0,0.0,0.0};
    EXPECT_NEAR(1.5707963267948966, EmissionAngle(observerBodyFixedPosition2, groundPtIntersection2,surfaceNormal2),1e-5);
+
+
+   vector<double> observerBodyFixedPosition3{2.0,0.0,0.0};
+   vector<double> groundPtIntersection3{1.0,0.0,0.0};
+   vector<double> surfaceNormal3{1.0,0.0,0.0};
+   EXPECT_NEAR(0.0,EmissionAngle(observerBodyFixedPosition3, groundPtIntersection3,surfaceNormal3),1e-5);
+
+
+   vector<double> observerBodyFixedPosition4{1.0,1.0,1.0};
+   vector<double> groundPtIntersection4{0.0,0.0,0.0};
+   vector<double> surfaceNormal4{-2.0,-2.0,2.0};
+   EXPECT_NEAR(3.141592653589793,EmissionAngle(observerBodyFixedPosition4, groundPtIntersection4,surfaceNormal4),1e-5);
+
+
+
 }
 
 
