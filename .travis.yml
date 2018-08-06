@@ -41,9 +41,9 @@ script:
   - cd build
   - cmake -DCOVERAGE=ON ..
   - cmake --build .
+  - ctest
 
 after_success:
-  - ctest
   - |
     if [ "$TRAVIS_OS_NAME" == linux ]; then
       coveralls --root $(dirname $PWD) -i src --verbose;
