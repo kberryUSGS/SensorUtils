@@ -34,16 +34,16 @@ install:
     fi
   - bash miniconda.sh -b -p $HOME/miniconda
   - export PATH="$HOME/miniconda/bin:$PATH"
-  - conda install -y -c conda-forge cmake
-
+  - conda install -y -c conda-forge cmake armadillo
+  
 script:
   - mkdir build
   - cd build
   - cmake -DCOVERAGE=ON ..
   - cmake --build .
+  - ctest
 
 after_success:
-  - ctest
   - |
     if [ "$TRAVIS_OS_NAME" == linux ]; then
       coveralls --root $(dirname $PWD) -i src --verbose;

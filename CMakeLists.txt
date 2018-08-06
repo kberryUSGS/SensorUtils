@@ -23,17 +23,22 @@ set_target_properties(sensorutils PROPERTIES
     PUBLIC_HEADER SensorUtils.h
 )
 
+find_package(Threads)
+
+# This is the linear algebra library we are using
+find_package(Armadillo REQUIRED)
 
 target_include_directories(sensorutils
                            PUBLIC
                            include/sensorutils
                            include/
+                           ${ARMADILLO_INCLUDE_DIRS}
 )
 
-find_package (Threads)
 
 target_link_libraries(sensorutils PUBLIC
-                      gtest ${CMAKE_THREAD_LIBS_INIT})
+                      gtest ${CMAKE_THREAD_LIBS_INIT}
+                      ${ARMADILLO_LIBRARIES})
 
 install(TARGETS sensorutils
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
