@@ -1,5 +1,5 @@
 #include "SensorUtils.h"
-
+#include "math.h"
 #include <gtest/gtest.h>
 
 TEST(SensorUtils, EmissionAngle) {
@@ -11,7 +11,7 @@ TEST(SensorUtils, EmissionAngle) {
    vector<double> observerBodyFixedPosition2{0.0,0.0,0.0};
    vector<double> groundPtIntersection2{0.0,0.0,0.0};
    vector<double> surfaceNormal2{0.0,0.0,0.0};
-   EXPECT_NEAR(1.5707963267948966, EmissionAngle(observerBodyFixedPosition2, groundPtIntersection2,surfaceNormal2),1e-5);
+   EXPECT_NEAR(M_PI/2.0, EmissionAngle(observerBodyFixedPosition2, groundPtIntersection2,surfaceNormal2),1e-5);
 
 
    vector<double> observerBodyFixedPosition3{2.0,0.0,0.0};
@@ -23,7 +23,7 @@ TEST(SensorUtils, EmissionAngle) {
    vector<double> observerBodyFixedPosition4{1.0,1.0,1.0};
    vector<double> groundPtIntersection4{0.0,0.0,0.0};
    vector<double> surfaceNormal4{-2.0,-2.0,2.0};
-   EXPECT_NEAR(3.141592653589793,EmissionAngle(observerBodyFixedPosition4, groundPtIntersection4,surfaceNormal4),1e-5);
+   EXPECT_NEAR(M_PI,EmissionAngle(observerBodyFixedPosition4, groundPtIntersection4,surfaceNormal4),1e-5);
 
 
 
@@ -31,10 +31,26 @@ TEST(SensorUtils, EmissionAngle) {
 
 
 TEST(SensorUtils, PhaseAngle) {
-   vector<double> instrumentPosition{0, 0, 0};
-   vector<double> sunPosition{0, 0, 0};
-   EXPECT_EQ(0, PhaseAngle(instrumentPosition, sunPosition));
+
+   vector<double> instrumentPosition1{-1, 0, 0};
+   vector<double> sunPosition1{1, 0, 0};
+   vector<double> surfaceIntersection1{0, 0, 0};
+   EXPECT_EQ(M_PI, PhaseAngle(instrumentPosition1, sunPosition1, surfaceIntersection1));
+
+
+   vector<double> instrumentPosition2{0, 1, 0};
+   vector<double> sunPosition2{0, 1, 0};
+   vector<double> surfaceIntersection2{0, 0, 0};
+   EXPECT_EQ(0, PhaseAngle(instrumentPosition2, sunPosition2, surfaceIntersection2));
+
+   vector<double> instrumentPosition3{1, 1, 0};
+   vector<double> sunPosition3{-1, 1, 0};
+   vector<double> surfaceIntersection3{0, 0, 0};
+   EXPECT_EQ(M_PI/2.0, PhaseAngle(instrumentPosition3, sunPosition3, surfaceIntersection3));
+
+
 }
+
 
 int main(int argc, char **argv) {
    ::testing::InitGoogleTest(&argc, argv);
