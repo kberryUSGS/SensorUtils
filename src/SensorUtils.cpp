@@ -24,27 +24,28 @@ double EmissionAngle(const vector<double>  &observerBodyFixedPosition,
                      const vector<double> &groundPtIntersection,
                      const vector<double> &surfaceNormal) {
 
-  arma::dvec surfacePoint(groundPtIntersection);
-  arma::dvec surfacePointNormal(surfaceNormal);
-  arma::dvec bodyFixedPosition(observerBodyFixedPosition);
+  arma::vec surfacePoint(groundPtIntersection);
+  arma::vec surfacePointNormal(surfaceNormal);
+  arma::vec bodyFixedPosition(observerBodyFixedPosition);
 
-  arma::dvec lookVec = bodyFixedPosition - surfacePoint;
+  arma::vec lookVec = bodyFixedPosition - surfacePoint;
 
-  arma::dvec normLookVec = arma::normalise(lookVec);
+  arma::vec normLookVec = arma::normalise(lookVec);
 
   double cos_theta = arma::dot(normLookVec,surfacePointNormal);
+
 
   //If cos(\theta) >= 1.0, there was some small rounding error
   //but the angle between the two vectors will be close to 0.0
   //Likewise, if cos(\theta) <=-1.0, a rounding error occurred
   //and the angle will be close to \pi radians.  To see
   //why, consult a plot of the acos function
-  if (cos_theta >= 1.0) {
+  if (cos_theta >= 1.0) {   
     return 0.0;
   }
 
   //IF cos(\theta) < -1.0,
-  if (cos_theta <= -1.0) {
+  if (cos_theta <= -1.0) {   
     return M_PI;
   }
 
