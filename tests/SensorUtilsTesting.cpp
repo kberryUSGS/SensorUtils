@@ -1,5 +1,5 @@
 #include "SensorUtils.h"
-#include "math.h"
+#include <cmath>
 #include <gtest/gtest.h>
 
 TEST(SensorUtils, EmissionAngle) {
