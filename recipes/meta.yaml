@@ -13,8 +13,8 @@ requirements:
 
 test:
   commands:
-    - test -e ${CMAKE_INSTALL_INCLUDEDIR}/include/sensorutils/SensorUtils.h
-    - test -e ${CMAKE_INSTALL_LIBDIR}/lib/libsensorutils.so
+    - test -e $PREFIX/include/sensorutils/SensorUtils.h
+    - test -e $PREFIX/lib64/libsensorutils.so
 
 about:
   home: https://github.com/USGS-Astrogeology/SensorUtils
