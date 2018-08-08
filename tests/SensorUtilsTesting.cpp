@@ -51,15 +51,16 @@ TEST(SensorUtils, PhaseAngle) {
 
 }
 
-TEST(SensorUtils,rectangular2latitudinal) {
+
+TEST(SensorUtils,rect2lat) {
   const double rad2deg = 180.0/M_PI;
   vector<double> coords{1.0,1.0,1.0};
   vector<double> radiusLatLong;
 
-  radiusLatLong = rectangular2latitudinal(coords);
+  radiusLatLong = rect2lat(coords);
   EXPECT_NEAR(1.7320,radiusLatLong[0],1e-4);
-  EXPECT_NEAR(45.0,rad2deg*radiusLatLong[1],1e-4);
-  EXPECT_NEAR(35.2643,rad2deg*radiusLatLong[2],1e-4);
+  EXPECT_NEAR(35.2643,rad2deg*radiusLatLong[1],1e-4);
+  EXPECT_NEAR(45.0,rad2deg*radiusLatLong[2],1e-4);
 
 }
 
