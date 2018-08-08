@@ -1,7 +1,5 @@
 #include "SensorUtils.h"
 #include <cmath>
-#include <iostream>
-#include <iomanip>
 #include <gtest/gtest.h>
 
 TEST(SensorUtils, EmissionAngle) {
@@ -30,6 +28,7 @@ TEST(SensorUtils, EmissionAngle) {
 
 
 }
+
 
 TEST(SensorUtils, PhaseAngle) {
 
