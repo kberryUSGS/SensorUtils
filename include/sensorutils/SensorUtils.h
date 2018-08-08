@@ -10,4 +10,8 @@ double EmissionAngle(const vector<double>  &observerBodyFixedPosition,
                      const vector<double> &groundPtIntersection,
                      const vector<double> &surfaceNormal);
 
+vector<double> rectangular2latitudinal(const vector<double> rectangularCoords);
+vector <double> computeRADec(const vector<double> j2000);
+
+
 #endif

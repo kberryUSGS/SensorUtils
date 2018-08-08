@@ -1,7 +1,9 @@
 #include "SensorUtils.h"
 
+#include <cfloat>
 #include <cmath>
 
+#include <iostream>
 #include <vector>
 
 #include <armadillo>
@@ -112,3 +114,67 @@ double EmissionAngle(const vector<double>  &observerBodyFixedPosition,
 
 
 }
+
+/**
+ * @brief rectangular2latitudinal
+ * @author Tyler Wilson
+ * @param rectangularCoords
+ * @return  Given a set of J2000 coordinates, returns [Range,RightAscension,Declination] in Radians
+ */
+
+
+vector<double> rectangular2latitudinal(const vector<double> rectangularCoords){
+
+  vector<double> radiusLongLat{0.0,0.0,0.0};
+
+
+  double d1 = abs(rectangularCoords[0]);
+  double d2 = abs(rectangularCoords[1]);
+
+  d1 = max(d1,d2);
+  d2 = abs(rectangularCoords[2]);
+
+  double big = max(d1,d2);
+
+  if (big > 0.0) {
+    double x = rectangularCoords[0]/big;
+    double y = rectangularCoords[1]/big;
+    double z = rectangularCoords[2]/big;
+
+    //Radius
+    radiusLongLat[0] = big*sqrt(pow(x,2.0)+pow(y,2.0)+pow(z,2.0));
+
+    //Latitude
+    radiusLongLat[2] = atan2(z,sqrt(pow(x,2)+pow(y,2)));
+
+    //Longitude
+    if (abs(rectangularCoords[0]) <= DBL_MIN && abs(rectangularCoords[1]) <=DBL_MIN) {
+      radiusLongLat[1] = 0.0;
+      }
+    else {
+      radiusLongLat[1] = atan2(rectangularCoords[1],rectangularCoords[0]);
+    }
+  }
+
+   return radiusLongLat;
+
+ }
+
+/**
+ * @brief computeRADec
+ * @author Tyler Wilson
+ * @param j2000:  The coordinates of the spacecraft in J2000 units
+ * @return [RightAscension, Declination] in Radians
+ */
+
+vector <double> computeRADec(const vector<double> j2000) {
+  vector<double> radiusLongLat = rectangular2latitudinal(j2000);
+  vector<double> RADec {radiusLongLat[1],radiusLongLat[2]};
+  if (RADec[0] <0.0) {
+    RADec[0] += 2*M_PI;
+  }
+  return RADec;
+
+
+}
+

@@ -1,5 +1,7 @@
 #include "SensorUtils.h"
 #include <cmath>
+#include <iostream>
+#include <iomanip>
 #include <gtest/gtest.h>
 
 TEST(SensorUtils, EmissionAngle) {
@@ -29,7 +31,6 @@ TEST(SensorUtils, EmissionAngle) {
 
 }
 
-
 TEST(SensorUtils, PhaseAngle) {
 
    vector<double> instrumentPosition1{-1, 0, 0};
@@ -48,6 +49,31 @@ TEST(SensorUtils, PhaseAngle) {
    vector<double> surfaceIntersection3{0, 0, 0};
    EXPECT_EQ(M_PI/2.0, PhaseAngle(instrumentPosition3, sunPosition3, surfaceIntersection3));
 
+
+}
+
+TEST(SensorUtils,rectangular2latitudinal) {
+  const double rad2deg = 180.0/M_PI;
+  vector<double> coords{1.0,1.0,1.0};
+  vector<double> radiusLatLong;
+
+  radiusLatLong = rectangular2latitudinal(coords);
+  EXPECT_NEAR(1.7320,radiusLatLong[0],1e-4);
+  EXPECT_NEAR(45.0,rad2deg*radiusLatLong[1],1e-4);
+  EXPECT_NEAR(35.2643,rad2deg*radiusLatLong[2],1e-4);
+
+}
+
+
+
+
+TEST(SensorUtils,computeRADec) {
+  const double rad2deg = 180.0/M_PI;
+  vector<double> j2000Coords{2905.8791410213739255 , 1131.3000186854017102 , -1979.192375451157659};
+  vector<double> radec = computeRADec(j2000Coords);
+
+  EXPECT_NEAR(21.27166986503079471,rad2deg*radec[0],1e-4);
+  EXPECT_NEAR(-32.403154857917648712,rad2deg*radec[1],1e-4);
 
 }
 
