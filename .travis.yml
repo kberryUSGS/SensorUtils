@@ -48,3 +48,7 @@ after_success:
     if [ "$TRAVIS_OS_NAME" == linux ]; then
       coveralls --root $(dirname $PWD) -i src --verbose;
     fi
+  - conda install -y -q conda-build anaconda-client
+  - conda config --set anaconda_upload yes
+  - conda build --token $CONDA_UPLOAD_TOKEN --python $PYTHON_VERSION recipe -q
+
