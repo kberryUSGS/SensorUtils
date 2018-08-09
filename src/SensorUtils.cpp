@@ -211,4 +211,4 @@ double EmissionAngle(const vector<double>  &observerBodyFixedPosition,
   }
 
 
-}
+
