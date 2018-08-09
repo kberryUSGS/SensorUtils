@@ -52,7 +52,9 @@ TEST(SensorUtils, PhaseAngle) {
 }
 
 
-TEST(SensorUtils,rect2lat) {
+
+//These are unit test values which came from
+TEST(rect2lat,cspiceunittest) {
   const double rad2deg = 180.0/M_PI;
   vector<double> coords{1.0,1.0,1.0};
   vector<double> radiusLatLong;
@@ -65,15 +67,41 @@ TEST(SensorUtils,rect2lat) {
 }
 
 
-
-
-TEST(SensorUtils,computeRADec) {
+TEST(rect2lat,zerovector) {
   const double rad2deg = 180.0/M_PI;
-  vector<double> j2000Coords{2905.8791410213739255 , 1131.3000186854017102 , -1979.192375451157659};
-  vector<double> radec = computeRADec(j2000Coords);
+  vector<double> coords{0.0,0.0,0.0};
+  vector<double> radiusLatLong;
 
-  EXPECT_NEAR(21.27166986503079471,rad2deg*radec[0],1e-4);
-  EXPECT_NEAR(-32.403154857917648712,rad2deg*radec[1],1e-4);
+  radiusLatLong = rect2lat(coords);
+  EXPECT_NEAR(0.0,radiusLatLong[0],1e-4);
+  EXPECT_NEAR(0.0,rad2deg*radiusLatLong[1],1e-4);
+  EXPECT_NEAR(0.0,rad2deg*radiusLatLong[2],1e-4);
+
+}
+
+TEST(rect2lat,zeroXCoord) {
+  const double rad2deg = 180.0/M_PI;
+  vector<double> coords{0.0,1.0,0.0};
+  vector<double> radiusLatLong;
+
+  radiusLatLong = rect2lat(coords);
+  EXPECT_NEAR(1.0,radiusLatLong[0],1e-4);
+  EXPECT_NEAR(0.0,rad2deg*radiusLatLong[1],1e-4);
+  EXPECT_NEAR(90.0,rad2deg*radiusLatLong[2],1e-4);
+
+}
+
+
+TEST(computeRADec,AlphaCentauri) {
+  const double rad2deg = 180.0/M_PI;
+  //coordinates are given in heliocentric-xyz parsecs
+  //The truth data was taken from SIMBAD:
+  //http://simbad.u-strasbg.fr/simbad/
+  vector<double> coords{-0.495304,-0.414169,-1.15686};
+  vector<double> radec = computeRADec(coords);
+
+  EXPECT_NEAR(219.90205833,rad2deg*radec[0],1e-4);
+  EXPECT_NEAR(-60.83399269,rad2deg*radec[1],1e-4);
 
 }
 

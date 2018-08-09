@@ -95,30 +95,26 @@ double PhaseAngle(const std::vector<double> &observerBodyFixedPosition,
  *
  * @author Tyler Wilson
  * @param rectangularCoords
- * @return  Given a set of J2000 coordinates, returns [R,RightAscension,Declination] in Radians
+ * @return  Given a set of Cartesian Coordinates, returns [R,RightAscension,Declination] in Radians
+ * (for the angles).
  */
 vector<double> rect2lat(const vector<double> rectangularCoords){
 
   vector<double> radiusLatLong{0.0,0.0,0.0};
   vec coords(rectangularCoords);
-  double maxCoord = coords.max();
+  double maxCoord = abs(coords).max();
 
+  //Ensures we don't have a zero vector (which is impossible if the norm > 0 )
   if (maxCoord > 0.0) {
     radiusLatLong[0] = norm(coords,2);
-    //Compute Latitude (Declination = asin(Z/R) )
+    //Declination = asin(Z/R)
     radiusLatLong[1] = asin(coords[2]/radiusLatLong[0]);
+    //RightAscension = atan(Y/X)
+    radiusLatLong[2] = atan2(coords[1],coords[0]);
 
-    //Compute Longitude.  We need to make sure we are not dividing by zero:
-    if (approx_equal(vec(abs(coords[0])),vec(0.0),"absdiff",DBL_MIN) ) {
-     radiusLatLong[2] = 0.0;
-    }
-    else {
-      //RightAscension = atan(Z/R).
-      radiusLatLong[2] = atan2(coords[1],coords[0]);
-    }
   }
 
-  cout << "radiusLatLong:  [" << radiusLatLong[0] << " , " << radiusLatLong[1] << " , " << radiusLatLong[2] << "]" << endl;
+  double r2d = 180.0/M_PI;
   return radiusLatLong;
 
  }
