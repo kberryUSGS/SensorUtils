@@ -186,7 +186,7 @@ double EmissionAngle(const vector<double>  &observerBodyFixedPosition,
 
   vec lookVec = bodyFixedPosition - surfacePoint;
 
-  vec normLookVec = arma::normalise(lookVec);
+  vec normLookVec = normalise(lookVec);
 
   double cos_theta = dot(normLookVec,surfacePointNormal);
 
@@ -208,6 +208,34 @@ double EmissionAngle(const vector<double>  &observerBodyFixedPosition,
 
   return acos(cos_theta);
 
-
-
 }
+
+/**
+ * @brief offNadirAngle
+ * @author Tyler Wilson
+ * @param observerBodyFixedPosition
+ * @param groundPtIntersection
+ * @param surfaceNormal
+ * @return The offnadir angle in radians
+ */
+
+double offNadirAngle(const vector<double> &observerBodyFixedPosition,
+                     const vector<double> &groundPtIntersection,
+                     const vector<double> &surfaceNormal) {
+
+  vec surfacePoint(groundPtIntersection);
+
+  vec bodyFixedPosition(observerBodyFixedPosition);
+
+  double emissionAngle = EmissionAngle(observerBodyFixedPosition,groundPtIntersection,surfaceNormal);
+
+  vec normalSurface = normalise(surfacePoint,2);
+  vec normalBodyFixed = normalise(bodyFixedPosition,2);
+  double theta = acos(dot(normalSurface,normalBodyFixed));
+  double piMinusEmission = M_PI - emissionAngle;
+  return M_PI - (theta+piMinusEmission);
+
+
+
+
+   }

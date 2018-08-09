@@ -136,6 +136,20 @@ TEST(computeRADec,AlphaCentauri) {
 }
 
 
+TEST(offNadirAngle,zeroVector) {
+  const double rad2deg = 180.0/M_PI;
+
+
+  vector<double> observerBodyFixedPosition{0.0,0.0,0.0};
+  vector<double> groundPtIntersection{0.0,0.0,0.0};
+  vector<double> surfaceNormal{0.0,0.0,0.0};
+  double theta = offNadirAngle(observerBodyFixedPosition,groundPtIntersection,surfaceNormal);
+
+  EXPECT_NEAR(0.0,rad2deg*theta,1e-4);
+
+
+}
+
 
 
 
