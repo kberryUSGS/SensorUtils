@@ -114,7 +114,6 @@ vector<double> rect2lat(const vector<double> rectangularCoords){
 
   }
 
-  double r2d = 180.0/M_PI;
   return radiusLatLong;
 
  }
