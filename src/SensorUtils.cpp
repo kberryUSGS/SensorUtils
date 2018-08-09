@@ -82,7 +82,7 @@ double PhaseAngle(const std::vector<double> &observerBodyFixedPosition,
  * (2) Y/R = cos(Declination)sin(RightAscension)
  * (3) Z/R = sin(Declination)
  *
- * Where Z = [X^2 + Y^2 + Z^2]^(1/2)
+ * Where R = [X^2 + Y^2 + Z^2]^(1/2)
  *
  * Dividing (2) by (1) and solving for RightAscension gives us:
  *
@@ -186,7 +186,7 @@ double EmissionAngle(const vector<double>  &observerBodyFixedPosition,
 
   vec lookVec = bodyFixedPosition - surfacePoint;
 
-  vec normLookVec = arma::normalise(lookVec);
+  vec normLookVec = normalise(lookVec);
 
   double cos_theta = dot(normLookVec,surfacePointNormal);
 
@@ -208,6 +208,7 @@ double EmissionAngle(const vector<double>  &observerBodyFixedPosition,
 
   return acos(cos_theta);
 
+  }
 
 
 }

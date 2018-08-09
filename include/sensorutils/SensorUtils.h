@@ -15,6 +15,4 @@ vector<double> lat2rect(vector<double> sphericalCoords);
 vector <double> computeRADec(const vector<double> rectangularCoords);
 
 
-
-
 #endif
