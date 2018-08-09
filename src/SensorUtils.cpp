@@ -126,8 +126,8 @@ vector<double> rect2lat(const vector<double> rectangularCoords){
  * @return [RightAscension, Declination] in Radians
  */
 
-vector <double> computeRADec(const vector<double> j2000) {
-  vector<double> radiusLatLong = rect2lat(j2000);
+vector <double> computeRADec(const vector<double> rectangularCoords) {
+  vector<double> radiusLatLong = rect2lat(rectangularCoords);
   vector<double> RADec {radiusLatLong[2],radiusLatLong[1]};
   if (RADec[0] <0.0) {
     RADec[0] += 2*M_PI;
@@ -136,45 +136,6 @@ vector <double> computeRADec(const vector<double> j2000) {
 
 
 }
-
-
-
-vector<double> rectangular2latitudinal(const vector<double> rectangularCoords){
-
-  vector<double> radiusLongLat{0.0,0.0,0.0};
-
-
-  double d1 = abs(rectangularCoords[0]);
-  double d2 = abs(rectangularCoords[1]);
-
-  d1 = max(d1,d2);
-  d2 = abs(rectangularCoords[2]);
-
-  double big = max(d1,d2);
-
-  if (big > 0.0) {
-    double x = rectangularCoords[0]/big;
-    double y = rectangularCoords[1]/big;
-    double z = rectangularCoords[2]/big;
-
-    //Radius
-    radiusLongLat[0] = big*sqrt(pow(x,2.0)+pow(y,2.0)+pow(z,2.0));
-
-    //Latitude
-    radiusLongLat[2] = atan2(z,sqrt(pow(x,2)+pow(y,2)));
-
-    //Longitude
-    if (abs(rectangularCoords[0]) <= DBL_MIN && abs(rectangularCoords[1]) <=DBL_MIN) {
-      radiusLongLat[1] = 0.0;
-      }
-    else {
-      radiusLongLat[1] = atan2(rectangularCoords[1],rectangularCoords[0]);
-    }
-  }
-
-   return radiusLongLat;
-
- }
 
 
 
