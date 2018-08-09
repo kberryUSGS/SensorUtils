@@ -2,33 +2,33 @@
 #include <cmath>
 #include <gtest/gtest.h>
 
-TEST(SensorUtils, EmissionAngle) {
-   vector<double> observerBodyFixedPosition1{-2399.5377741187439824,-2374.0338295628557717,1277.6750059817834426};
-   vector<double> groundPtIntersection1{-2123.3622582859998147,-2380.37178122360001,1194.6783966636000969};
-   vector<double> surfaceNormal1{-0.62338400000000004919,-0.69883799999999995922,0.35073799999999999422};
-   EXPECT_NEAR(0.81971651917135968102, EmissionAngle(observerBodyFixedPosition1, groundPtIntersection1,surfaceNormal1),1e-5);
 
-   vector<double> observerBodyFixedPosition2{0.0,0.0,0.0};
-   vector<double> groundPtIntersection2{0.0,0.0,0.0};
-   vector<double> surfaceNormal2{0.0,0.0,0.0};
-   EXPECT_NEAR(M_PI/2.0, EmissionAngle(observerBodyFixedPosition2, groundPtIntersection2,surfaceNormal2),1e-5);
+TEST(EmissionAngle,zerosForAllInputs) {
 
+  vector<double> observerBodyFixedPosition{0.0,0.0,0.0};
+  vector<double> groundPtIntersection{0.0,0.0,0.0};
+  vector<double> surfaceNormal{0.0,0.0,0.0};
+  EXPECT_NEAR(M_PI/2.0, EmissionAngle(observerBodyFixedPosition, groundPtIntersection,surfaceNormal),1e-5);
 
-   vector<double> observerBodyFixedPosition3{2.0,0.0,0.0};
-   vector<double> groundPtIntersection3{1.0,0.0,0.0};
-   vector<double> surfaceNormal3{1.0,0.0,0.0};
-   EXPECT_NEAR(0.0,EmissionAngle(observerBodyFixedPosition3, groundPtIntersection3,surfaceNormal3),1e-5);
+ }
 
+TEST(EmissionAngle,lookVectorSameAsNormal) {
 
-   vector<double> observerBodyFixedPosition4{1.0,1.0,1.0};
-   vector<double> groundPtIntersection4{0.0,0.0,0.0};
-   vector<double> surfaceNormal4{-2.0,-2.0,2.0};
-   EXPECT_NEAR(M_PI,EmissionAngle(observerBodyFixedPosition4, groundPtIntersection4,surfaceNormal4),1e-5);
+  vector<double> observerBodyFixedPosition3{2.0,0.0,0.0};
+  vector<double> groundPtIntersection3{1.0,0.0,0.0};
+  vector<double> surfaceNormal3{1.0,0.0,0.0};
+  EXPECT_NEAR(0.0,EmissionAngle(observerBodyFixedPosition3, groundPtIntersection3,surfaceNormal3),1e-5);
 
 
+ }
 
-}
+TEST(EmissionAngle,lookVector180FromNormal) {
 
+  vector<double> observerBodyFixedPosition4{1.0,1.0,1.0};
+  vector<double> groundPtIntersection4{0.0,0.0,0.0};
+  vector<double> surfaceNormal4{-2.0,-2.0,2.0};
+  EXPECT_NEAR(M_PI,EmissionAngle(observerBodyFixedPosition4, groundPtIntersection4,surfaceNormal4),1e-5);
+ }
 
 TEST(SensorUtils, PhaseAngle) {
 
@@ -54,6 +54,7 @@ TEST(SensorUtils, PhaseAngle) {
 
 
 //These are unit test values which came from
+//the cspice implementation of this function
 TEST(rect2lat,cspiceunittest) {
   const double rad2deg = 180.0/M_PI;
   vector<double> coords{1.0,1.0,1.0};
