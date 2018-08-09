@@ -79,7 +79,7 @@ double PhaseAngle(const std::vector<double> &observerBodyFixedPosition,
  * Rectanglular Cartesian Coordinates are related to Spherical Coordinates by:
  *
  * (1) X/R = cos(Declination)cos(RightAscension)
- * (2) Y/R = cos(Declination)cos(RightAscension)
+ * (2) Y/R = cos(Declination)sin(RightAscension)
  * (3) Z/R = sin(Declination)
  *
  * Where Z = [X^2 + Y^2 + Z^2]^(1/2)
@@ -118,15 +118,44 @@ vector<double> rect2lat(const vector<double> rectangularCoords){
 
  }
 
+
+/**
+ * @brief lat2rect
+ * @author Tyler Wilson
+ * @param sphericalCoords [R,RA,Declination], RA and Declination need to be given in radians.
+ * @return Cartesian coordinates
+ *
+ */
+
+vector<double> lat2rect(vector<double> sphericalCoords) {
+
+  double R = sphericalCoords[0];
+  double RA = sphericalCoords[1];
+  double dec = sphericalCoords[2];
+
+
+  vector<double> cartesian{0.0,0.0,0.0};
+  cartesian[0] = R*cos(dec)*cos(RA);
+  cartesian[1] = R*cos(dec)*sin(RA);
+  cartesian[2] = R*sin(dec);
+
+  return cartesian;
+
+}
+
+
+
 /**
  * @brief computeRADec
  * @author Tyler Wilson
- * @param j2000:  The coordinates of the spacecraft in J2000 units
+ * @param  rectangularCoords:  The coordinates of the spacecraft in Cartesian coords
+ * (body-fixed, J2000,...)
  * @return [RightAscension, Declination] in Radians
  */
 
 vector <double> computeRADec(const vector<double> rectangularCoords) {
   vector<double> radiusLatLong = rect2lat(rectangularCoords);
+
   vector<double> RADec {radiusLatLong[2],radiusLatLong[1]};
   if (RADec[0] <0.0) {
     RADec[0] += 2*M_PI;
@@ -151,15 +180,15 @@ double EmissionAngle(const vector<double>  &observerBodyFixedPosition,
                      const vector<double> &groundPtIntersection,
                      const vector<double> &surfaceNormal) {
 
-  arma::vec surfacePoint(groundPtIntersection);
-  arma::vec surfacePointNormal(surfaceNormal);
-  arma::vec bodyFixedPosition(observerBodyFixedPosition);
+  vec surfacePoint(groundPtIntersection);
+  vec surfacePointNormal(surfaceNormal);
+  vec bodyFixedPosition(observerBodyFixedPosition);
 
-  arma::vec lookVec = bodyFixedPosition - surfacePoint;
+  vec lookVec = bodyFixedPosition - surfacePoint;
 
-  arma::vec normLookVec = arma::normalise(lookVec);
+  vec normLookVec = arma::normalise(lookVec);
 
-  double cos_theta = arma::dot(normLookVec,surfacePointNormal);
+  double cos_theta = dot(normLookVec,surfacePointNormal);
 
 
   //If cos(\theta) >= 1.0, there was some small rounding error
@@ -177,7 +206,7 @@ double EmissionAngle(const vector<double>  &observerBodyFixedPosition,
   }
 
 
-  return std::acos(cos_theta);
+  return acos(cos_theta);
 
 
 

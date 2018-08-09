@@ -11,6 +11,7 @@ double EmissionAngle(const vector<double>  &observerBodyFixedPosition,
                      const vector<double> &surfaceNormal);
 
 vector<double> rect2lat(const vector<double> rectangularCoords);
+vector<double> lat2rect(vector<double> sphericalCoords);
 vector <double> computeRADec(const vector<double> rectangularCoords);
 
 
