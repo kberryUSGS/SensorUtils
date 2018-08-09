@@ -51,6 +51,20 @@ TEST(SensorUtils, PhaseAngle) {
 
 }
 
+/**
+ * Testing general case for illuminatorPosition method.
+ */
+TEST(illuminatorPosition, SensorUtils) {
+
+   vector<double> surfaceIntersection{0, 1, 0};
+   vector<double> illuminatorDirection{-1, 0, 1};
+   vector<double> sunPosition{1, 1, -1};
+   vector<double> illumPos = arma::conv_to< std::vector<double> >::from(illuminatorPosition(surfaceIntersection, 
+                                                                                            illuminatorDirection));
+   EXPECT_EQ(sunPosition, illumPos);
+
+}
+
 
 
 //These are unit test values which came from
