@@ -7,7 +7,7 @@
 **If you have conda:**
 
 ```bash
-conda install armadillo
+conda install armadillo -c conda-forge
 ```
   > *Make sure your environment is activated if you have a dedicated conda environment.*
 
