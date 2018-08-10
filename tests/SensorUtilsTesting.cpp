@@ -107,6 +107,34 @@ TEST(rect2lat,zeroXCoord) {
 }
 
 
+TEST(lat2rect,zeroXCoord) {
+  const double rad2deg = 180.0/M_PI;
+  vector<double> spherical{0.0,0.0,0.0};
+  vector<double> cartesian = lat2rect(spherical);
+
+  EXPECT_NEAR(0.0,cartesian[0],1e-4);
+  EXPECT_NEAR(0.0,cartesian[1],1e-4);
+  EXPECT_NEAR(0.0,cartesian[1],1e-4);
+
+}
+
+TEST(lat2rect,AlphaCentauri) {
+  const double deg2rad = M_PI/180.0;
+  //coordinates are returned in heliocentric-xyz parsecs
+  //The truth data was taken from SIMBAD:
+  //http://simbad.u-strasbg.fr/simbad/
+  vector<double> spherical{1.32483,deg2rad*219.90205833,-60.83399269*deg2rad};
+  vector<double> cartesian = lat2rect(spherical);
+
+  EXPECT_NEAR(-0.495304,cartesian[0],1e-4);
+  EXPECT_NEAR(-0.414169,cartesian[1],1e-4);
+  EXPECT_NEAR(-1.15686,cartesian[2],1e-4);
+
+}
+
+
+
+
 TEST(computeRADec,AlphaCentauri) {
   const double rad2deg = 180.0/M_PI;
   //coordinates are given in heliocentric-xyz parsecs
@@ -115,10 +143,28 @@ TEST(computeRADec,AlphaCentauri) {
   vector<double> coords{-0.495304,-0.414169,-1.15686};
   vector<double> radec = computeRADec(coords);
 
+
   EXPECT_NEAR(219.90205833,rad2deg*radec[0],1e-4);
   EXPECT_NEAR(-60.83399269,rad2deg*radec[1],1e-4);
 
 }
+
+
+TEST(offNadirAngle,zeroVector) {
+  const double rad2deg = 180.0/M_PI;
+
+
+  vector<double> observerBodyFixedPosition{0.0,0.0,0.0};
+  vector<double> groundPtIntersection{0.0,0.0,0.0};
+  vector<double> surfaceNormal{0.0,0.0,0.0};
+  double theta = offNadirAngle(observerBodyFixedPosition,groundPtIntersection,surfaceNormal);
+
+  EXPECT_NEAR(0.0,rad2deg*theta,1e-4);
+
+
+}
+
+
 
 
 int main(int argc, char **argv) {
