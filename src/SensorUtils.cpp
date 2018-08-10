@@ -222,20 +222,38 @@ double EmissionAngle(const vector<double>  &observerBodyFixedPosition,
 double offNadirAngle(const vector<double> &observerBodyFixedPosition,
                      const vector<double> &groundPtIntersection,
                      const vector<double> &surfaceNormal) {
-
   vec surfacePoint(groundPtIntersection);
-
   vec bodyFixedPosition(observerBodyFixedPosition);
-
   double emissionAngle = EmissionAngle(observerBodyFixedPosition,groundPtIntersection,surfaceNormal);
-
   vec normalSurface = normalise(surfacePoint,2);
   vec normalBodyFixed = normalise(bodyFixedPosition,2);
   double theta = acos(dot(normalSurface,normalBodyFixed));
   double piMinusEmission = M_PI - emissionAngle;
   return M_PI - (theta+piMinusEmission);
 
-
-
-
    }
+
+}
+
+
+/**
+ * This method calculates the position of the illuminator with respect
+ * to the observed body fixed position. It requires a ground intersection point
+ * and the illuminator direction vector.
+ *
+ * @author Jeannie Backer
+ *
+ * @param groundPointIntersection A point on the surface of the observed body,
+ *                                in body fixed coordinate system.
+ * @param illuminatorDirection An illuminator direction vector,
+ *                             in illuminator center coordinate system.
+ *
+ * @return The position of the illuminator in body fixed coordinate system.
+ */
+arma::vec illuminatorPosition(const arma::vec &groundPointIntersection,
+                              const arma::vec &illuminatorDirection) {
+  // sun pos (center body to center sun)
+  // is body fixed ground coordinated (center body to ground point)
+  // minus the illumination direction (center sun to ground point)
+  return groundPointIntersection - illuminatorDirection;
+}
