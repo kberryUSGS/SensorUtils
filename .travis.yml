@@ -50,5 +50,5 @@ after_success:
     fi
   - conda install -y -q conda-build anaconda-client
   - conda config --set anaconda_upload yes
-  - conda build --token $CONDA_UPLOAD_TOKEN --python $PYTHON_VERSION recipes -q
+  - conda build --token $CONDA_UPLOAD_TOKEN recipes -q
 
