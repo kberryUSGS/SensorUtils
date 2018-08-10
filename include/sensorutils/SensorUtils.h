@@ -15,8 +15,10 @@ double EmissionAngle(const vector<double>  &observerBodyFixedPosition,
                      const vector<double> &groundPtIntersection,
                      const vector<double> &surfaceNormal);
 
-vector<double> rect2lat(const vector<double> rectangularCoords);
+
 vector<double> lat2rect(vector<double> sphericalCoords);
+vector<double> rect2lat(const vector<double> rectangularCoords);
+vector <double> computeRADec(const vector<double> rectangularCoords);
 vector <double> computeRADec(const vector<double> rectangularCoords);
 
 double offNadirAngle(const vector<double> &observerBodyFixedPosition,
@@ -26,6 +28,5 @@ double offNadirAngle(const vector<double> &observerBodyFixedPosition,
 vec illuminatorPosition(const vec &groundPointIntersection,
                         const vec &illuminatorDirection);
 
-vector <double> computeRADec(const vector<double> rectangularCoords);
 
 #endif

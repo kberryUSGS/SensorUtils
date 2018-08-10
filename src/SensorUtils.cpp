@@ -134,7 +134,7 @@ double PhaseAngle(const std::vector<double> &observerBodyFixedPosition,
  * (2) Y/R = cos(Declination)sin(RightAscension)
  * (3) Z/R = sin(Declination)
  *
- * Where Z = [X^2 + Y^2 + Z^2]^(1/2)
+ * Where R = [X^2 + Y^2 + Z^2]^(1/2), where R is the radius of the sphere.
  *
  * Dividing (2) by (1) and solving for RightAscension gives us:
  *
@@ -174,7 +174,7 @@ vector<double> rect2lat(const vector<double> rectangularCoords){
 /**
  * @brief lat2rect
  * @author Tyler Wilson
- * @param sphericalCoords [R,RA,Declination], RA and Declination need to be given in radians.
+ * @param sphericalCoords [R,longitude,latitude], long/lat are given in radians.
  * @return Cartesian coordinates
  *
  */
@@ -264,7 +264,7 @@ double EmissionAngle(const vector<double>  &observerBodyFixedPosition,
 
 /**
  * @brief offNadirAngle:  The angle (in radians) between the look vector of the spacecraft
- * and the look vector of the spacecraft at nadir (when the spacecraft is directly 
+ * and the look vector of the spacecraft at nadir (when the spacecraft is directly
  * over the intersection point of the look vector with the target).
  * @author Tyler Wilson
  * @param observerBodyFixedPosition
