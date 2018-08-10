@@ -10,17 +10,22 @@ set(CMAKE_CXX_STANDARD 11)
 set(COVERAGE OFF CACHE BOOL "Coverage")
 
 add_library(sensorutils SHARED
-            src/SensorUtils.cpp)
+            src/SensorUtils.cpp
+            src/sensorcore/SensorCore.cpp
+            src/sensormath/SensorMath.cpp
+            src/sensormodel/SensorModel.cpp
+            src/shape/Shape.cpp)
 
 if(COVERAGE)
     target_compile_options(sensorutils PRIVATE --coverage -O0)
     target_link_libraries(sensorutils PRIVATE --coverage -O0)
 endif()
 
+
+
 set_target_properties(sensorutils PROPERTIES
     VERSION ${PROJECT_VERSION}
     SOVERSION 1
-    PUBLIC_HEADER ${PROJECT_SOURCE_DIR}/include/sensorutils/SensorUtils.h
 )
 
 find_package(Threads)
@@ -31,6 +36,10 @@ find_package(Armadillo REQUIRED)
 target_include_directories(sensorutils
                            PUBLIC
                            include/sensorutils/
+                           include/sensorcore/
+                           include/sensormath/
+                           include/sensormodel/
+                           include/shape/
                            include/
                            ${ARMADILLO_INCLUDE_DIRS}
 )
