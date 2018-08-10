@@ -2,6 +2,88 @@
 #include <cmath>
 #include <gtest/gtest.h>
 
+/**
+ * Test distance() function.
+ */
+TEST(distance, simpleDistance) {
+  // Easy hand-calculation: sqrt(1^2 + 2^2 + 2^2) ==> sqrt(9) ==> 3
+  vector<double> fartherPoint{10, 10, 10};
+  vector<double> closerPoint{9, 8, 8};
+  EXPECT_DOUBLE_EQ(3.0, distance(fartherPoint, closerPoint));
+  EXPECT_DOUBLE_EQ(3.0, distance(closerPoint, fartherPoint));
+}
+
+TEST(distance, zero) {
+  // Zero distance
+  vector<double> zero{0.0, 0.0, 0.0};
+  EXPECT_DOUBLE_EQ(0.0, distance(zero, zero));   
+}
+
+/**
+ * Test resolution() function
+ */
+TEST(resolution, allPositive) {
+  double distance = 10.0; // km
+  double focalLength = 500; // mm
+  double pixelPitch = 0.1; // mm
+  double summing = 1.0; // no summing (no binning)
+  EXPECT_DOUBLE_EQ(2.0, resolution(distance, focalLength, pixelPitch, summing)); 
+}
+
+TEST(resolution, summingGreaterThanOne) {
+  double distance = 10.0; // km
+  double focalLength = 500; // mm
+  double pixelPitch = 0.1; // mm
+  double summing = 2.0; // summing of 2 pixels together (losing resolution)
+  EXPECT_DOUBLE_EQ(4.0, resolution(distance, focalLength, pixelPitch, summing));
+}
+
+TEST(resolution, negativeDistance) {
+  // Negative distance
+  double distance = -10.0; // km
+  double focalLength = 500; // mm
+  double pixelPitch = 0.1; // mm
+  double summing = 1.0; // no summing (no binning)
+  EXPECT_DOUBLE_EQ(0.0, resolution(distance, focalLength, pixelPitch, summing));
+}
+
+TEST(resolution, negativeFocalLength) {
+  // Negative focal length
+  double distance = 10.0; // km
+  double focalLength = -500; // mm
+  double pixelPitch = 0.1; // mm
+  double summing = 1.0; // no summing (no binning)
+  EXPECT_DOUBLE_EQ(0.0, resolution(distance, focalLength, pixelPitch, summing));
+}
+
+TEST(resolution, negativePixelPitch) {
+  // Negative pixel pitch
+  double distance = 10.0; // km
+  double focalLength = 500; // mm
+  double pixelPitch = -0.1; // mm
+  double summing = 1.0; // no summing (no binning)
+  EXPECT_DOUBLE_EQ(0.0, resolution(distance, focalLength, pixelPitch, summing));
+}
+
+TEST(resolution, negativeSumming) {
+  // Negative summing
+  double distance = 10.0; // km
+  double focalLength = 500; // mm
+  double pixelPitch = 0.1; // mm
+  double summing = -1.0; // no summing (no binning)
+  EXPECT_DOUBLE_EQ(0.0, resolution(distance, focalLength, pixelPitch, summing));
+}
+
+TEST(resolution, zeroDivisors) {
+  double distance = 10.0; // km
+  double focalLength = 500; // mm
+  double pixelPitch = 0.0; // mm
+  double summing = 1.0; // no summing (no binning)
+  // Zero pixel pitch
+  EXPECT_DOUBLE_EQ(0.0, resolution(distance, focalLength, pixelPitch, summing));
+  // Zero focal length
+  EXPECT_DOUBLE_EQ(0.0, resolution(distance, 0.0, 1.0, summing));
+}
 
 TEST(EmissionAngle,zerosForAllInputs) {
 
