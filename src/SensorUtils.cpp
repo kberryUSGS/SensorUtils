@@ -233,7 +233,7 @@ double offNadirAngle(const vector<double> &observerBodyFixedPosition,
 
    }
 
-}
+
 
 
 /**
