@@ -211,7 +211,9 @@ double EmissionAngle(const vector<double>  &observerBodyFixedPosition,
 }
 
 /**
- * @brief offNadirAngle
+ * @brief offNadirAngle:  The angle (in radians) between the look vector of the spacecraft
+ * and the look vector of the spacecraft at nadir (when the spacecraft is directly 
+ * over the intersection point of the look vector with the target).
  * @author Tyler Wilson
  * @param observerBodyFixedPosition
  * @param groundPtIntersection
