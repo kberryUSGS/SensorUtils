@@ -42,6 +42,7 @@ script:
   - cmake -DCOVERAGE=ON ..
   - cmake --build .
   - ctest
+  - cd ..
 
 after_success:
   - |
