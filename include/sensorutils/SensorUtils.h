@@ -18,9 +18,12 @@ vector<double> rect2lat(const vector<double> rectangularCoords);
 vector <double> computeRADec(const vector<double> rectangularCoords);
 vector <double> computeRADec(const vector<double> rectangularCoords);
 
+double offNadirAngle(const vector<double> &observerBodyFixedPosition,
+                     const vector<double> &groundPtIntersection,
+                     const vector<double> &surfaceNormal);
+
 vec illuminatorPosition(const vec &groundPointIntersection,
                         const vec &illuminatorDirection);
-
 
 
 #endif

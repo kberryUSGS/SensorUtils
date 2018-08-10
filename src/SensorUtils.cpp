@@ -208,8 +208,32 @@ double EmissionAngle(const vector<double>  &observerBodyFixedPosition,
 
   return acos(cos_theta);
 
-  }
+}
 
+/**
+ * @brief offNadirAngle:  The angle (in radians) between the look vector of the spacecraft
+ * and the look vector of the spacecraft at nadir (when the spacecraft is directly
+ * over the intersection point of the look vector with the target).
+ * @author Tyler Wilson
+ * @param observerBodyFixedPosition
+ * @param groundPtIntersection
+ * @param surfaceNormal
+ * @return The offnadir angle in radians
+ */
+
+double offNadirAngle(const vector<double> &observerBodyFixedPosition,
+                     const vector<double> &groundPtIntersection,
+                     const vector<double> &surfaceNormal) {
+  vec surfacePoint(groundPtIntersection);
+  vec bodyFixedPosition(observerBodyFixedPosition);
+  double emissionAngle = EmissionAngle(observerBodyFixedPosition,groundPtIntersection,surfaceNormal);
+  vec normalSurface = normalise(surfacePoint,2);
+  vec normalBodyFixed = normalise(bodyFixedPosition,2);
+  double theta = acos(dot(normalSurface,normalBodyFixed));
+  double piMinusEmission = M_PI - emissionAngle;
+  return M_PI - (theta+piMinusEmission);
+
+   }
 
 
 
