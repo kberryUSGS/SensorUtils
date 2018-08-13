@@ -1,5 +1,3 @@
-#include "SensorCore.h"
-
 #include <cfloat>
 #include <cmath>
 
