@@ -14,7 +14,7 @@ add_library(sensorutils SHARED
             src/sensorcore/SensorCore.cpp
             src/sensormath/SensorMath.cpp
             src/sensormodel/SensorModel.cpp
-            src/shape/Shape.cpp)
+	    src/shapemodel/ShapeModel.cpp)
 
 if(COVERAGE)
     target_compile_options(sensorutils PRIVATE --coverage -O0)
@@ -39,7 +39,7 @@ target_include_directories(sensorutils
                            include/sensorcore/
                            include/sensormath/
                            include/sensormodel/
-                           include/shape/
+                           include/shapemodel/
                            include/
                            ${ARMADILLO_INCLUDE_DIRS}
 )
