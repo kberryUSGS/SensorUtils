@@ -12,7 +12,6 @@ requirements:
 
 test:
   commands:
-    - test -e $PREFIX/include/sensorutils/SensorUtils.h
     - test -e $PREFIX/lib64/libsensorutils.so
 
 about:
