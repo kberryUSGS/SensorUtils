@@ -12,7 +12,7 @@ requirements:
 
 test:
   commands:
-    - test -e $PREFIX/lib64/libsensorutils.so
+    - test -e $PREFIX/lib/libsensorutils.so 
 
 about:
   home: https://github.com/USGS-Astrogeology/SensorUtils
