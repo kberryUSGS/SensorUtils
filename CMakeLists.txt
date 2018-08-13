@@ -55,8 +55,9 @@ install(TARGETS sensorutils
 
 
 
-include(CTest)
-
-enable_testing()
-
-add_subdirectory(tests)
+option (BUILD_TESTS "Build tests" ON)
+if(BUILD_TESTS)
+  include(CTest)
+  enable_testing()
+  add_subdirectory(tests)
+endif()
