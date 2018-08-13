@@ -42,13 +42,13 @@ script:
   - cmake -DCOVERAGE=ON ..
   - cmake --build .
   - ctest
-  - cd ..
 
 after_success:
   - |
     if [ "$TRAVIS_OS_NAME" == linux ]; then
-      coveralls --root $(dirname $PWD) -i src --verbose;
+      coveralls --root $(dirname $PWD) -i src/ --verbose;
     fi
+  - cd ..
   - conda install -y -q conda-build anaconda-client
   - conda config --set anaconda_upload yes
   - conda config --add channels conda-forge
