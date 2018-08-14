@@ -1,23 +1,7 @@
 #include "SensorUtils.h"
+
 #include <cmath>
 #include <gtest/gtest.h>
-
-/**
- * Test distance() function.
- */
-TEST(distance, simpleDistance) {
-  // Easy hand-calculation: sqrt(1^2 + 2^2 + 2^2) ==> sqrt(9) ==> 3
-  vector<double> fartherPoint{10, 10, 10};
-  vector<double> closerPoint{9, 8, 8};
-  EXPECT_DOUBLE_EQ(3.0, distance(fartherPoint, closerPoint));
-  EXPECT_DOUBLE_EQ(3.0, distance(closerPoint, fartherPoint));
-}
-
-TEST(distance, zero) {
-  // Zero distance
-  vector<double> zero{0.0, 0.0, 0.0};
-  EXPECT_DOUBLE_EQ(0.0, distance(zero, zero));   
-}
 
 /**
  * Test resolution() function
@@ -148,75 +132,6 @@ TEST(illuminatorPosition, SensorUtils) {
 }
 
 
-
-//These are unit test values which came from
-//the cspice implementation of this function
-TEST(rect2lat,cspiceunittest) {
-  const double rad2deg = 180.0/M_PI;
-  vector<double> coords{1.0,1.0,1.0};
-  vector<double> radiusLatLong;
-
-  radiusLatLong = rect2lat(coords);
-  EXPECT_NEAR(1.7320,radiusLatLong[0],1e-4);
-  EXPECT_NEAR(35.2643,rad2deg*radiusLatLong[1],1e-4);
-  EXPECT_NEAR(45.0,rad2deg*radiusLatLong[2],1e-4);
-
-}
-
-
-TEST(rect2lat,zerovector) {
-  const double rad2deg = 180.0/M_PI;
-  vector<double> coords{0.0,0.0,0.0};
-  vector<double> radiusLatLong;
-
-  radiusLatLong = rect2lat(coords);
-  EXPECT_NEAR(0.0,radiusLatLong[0],1e-4);
-  EXPECT_NEAR(0.0,rad2deg*radiusLatLong[1],1e-4);
-  EXPECT_NEAR(0.0,rad2deg*radiusLatLong[2],1e-4);
-
-}
-
-TEST(rect2lat,zeroXCoord) {
-  const double rad2deg = 180.0/M_PI;
-  vector<double> coords{0.0,1.0,0.0};
-  vector<double> radiusLatLong;
-
-  radiusLatLong = rect2lat(coords);
-  EXPECT_NEAR(1.0,radiusLatLong[0],1e-4);
-  EXPECT_NEAR(0.0,rad2deg*radiusLatLong[1],1e-4);
-  EXPECT_NEAR(90.0,rad2deg*radiusLatLong[2],1e-4);
-
-}
-
-
-TEST(lat2rect,zeroXCoord) {
-  const double rad2deg = 180.0/M_PI;
-  vector<double> spherical{0.0,0.0,0.0};
-  vector<double> cartesian = lat2rect(spherical);
-
-  EXPECT_NEAR(0.0,cartesian[0],1e-4);
-  EXPECT_NEAR(0.0,cartesian[1],1e-4);
-  EXPECT_NEAR(0.0,cartesian[1],1e-4);
-
-}
-
-TEST(lat2rect,AlphaCentauri) {
-  const double deg2rad = M_PI/180.0;
-  //coordinates are returned in heliocentric-xyz parsecs
-  //The truth data was taken from SIMBAD:
-  //http://simbad.u-strasbg.fr/simbad/
-  vector<double> spherical{1.32483,deg2rad*219.90205833,-60.83399269*deg2rad};
-  vector<double> cartesian = lat2rect(spherical);
-
-  EXPECT_NEAR(-0.495304,cartesian[0],1e-4);
-  EXPECT_NEAR(-0.414169,cartesian[1],1e-4);
-  EXPECT_NEAR(-1.15686,cartesian[2],1e-4);
-
-}
-
-
-
-
 TEST(computeRADec,AlphaCentauri) {
   const double rad2deg = 180.0/M_PI;
   //coordinates are given in heliocentric-xyz parsecs
@@ -225,10 +140,8 @@ TEST(computeRADec,AlphaCentauri) {
   vector<double> coords{-0.495304,-0.414169,-1.15686};
   vector<double> radec = computeRADec(coords);
 
-
   EXPECT_NEAR(219.90205833,rad2deg*radec[0],1e-4);
   EXPECT_NEAR(-60.83399269,rad2deg*radec[1],1e-4);
-
 }
 
 
@@ -242,12 +155,7 @@ TEST(offNadirAngle,zeroVector) {
   double theta = offNadirAngle(observerBodyFixedPosition,groundPtIntersection,surfaceNormal);
 
   EXPECT_NEAR(0.0,rad2deg*theta,1e-4);
-
-
 }
-
-
-
 
 int main(int argc, char **argv) {
    ::testing::InitGoogleTest(&argc, argv);
