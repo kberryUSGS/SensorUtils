@@ -10,7 +10,6 @@ using namespace std;
 using namespace arma;
 
 namespace sensormath {
-  double pi();
 
   vec cartesianToVec(CartesianPoint point);
   vec cartesianToVec(CartesianVector cartesianVec);
