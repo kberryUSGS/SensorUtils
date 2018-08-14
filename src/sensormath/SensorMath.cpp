@@ -20,7 +20,7 @@ namespace sensormath {
   }
 
 
-  //  arma::vec -> CartesianPoint
+  // arma::vec -> CartesianPoint
   CartesianVector vecToCartesian(vec vec) {
     return CartesianVector(vec[0], vec[1], vec[2]); 
   }
