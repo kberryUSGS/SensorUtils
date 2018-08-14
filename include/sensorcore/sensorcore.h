@@ -22,26 +22,12 @@ struct CartesianPoint {
   CartesianPoint(double x, double y, double z): x(x), y(y), z(z) {};
 };
 
+
 /**
  * Represents a three-dimensional vector in cartesian space relative to a known origin.
  */
-struct CartesianVector {
-  double x;              /**< The x-component of the vector. */
-  double y;              /**< The y-component of the vector. */
-  double z;              /**< The z-component of the vector. */
-  /**
-   * Creates a default-initialized vector containing zero as each of its components.
-   */
-  CartesianVector(): x(0.0), y(0.0), z(0.0) {};
-  /**
-   * Creates a CartesianVector with the passed values.
-   *
-   * @param x The x-component of the vector.
-   * @param y The y-component of the vector.
-   * @param z The z-component of the vector.
-   */
-  CartesianVector(double x, double y, double z): x(x), y(y), z(z) {};
-};
+typedef CartesianPoint CartesianVector;
+
 
 /**
  * Represents a three-dimensional point in an image.
