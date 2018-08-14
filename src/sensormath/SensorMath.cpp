@@ -1,34 +1,28 @@
-#include "Sensor.h"
 #include "SensorMath.h"
 
 #include <cfloat>
 #include <cmath>
 
-#include <iostream>
-#include <vector>
-
-#include <armadillo>
-
 using namespace std;
-
 using namespace arma;
 
 namespace sensormath {
 
-  // returns pi
-  double pi() {
-    return datum::pi; 
-  }
-
   // cartesian point -> arma::vec
   vec cartesianToVec(CartesianPoint point) {
-    return vec {point.x, point.y, point.x}; 
+    return vec {point.x, point.y, point.z}; 
+  }
+
+
+  // cartesian point -> arma::vec
+  vec cartesianToVec(CartesianVector cartesianVec) {
+    return vec {cartesianVec.x, cartesianVec.y, cartesianVec.z}; 
   }
 
 
   //  arma::vec -> CartesianPoint
-  CartesianPoint vecToCartesian(vec vec) {
-    return CartesianPoint(vec[0], vec[1], vec[2]); 
+  CartesianVector vecToCartesian(vec vec) {
+    return CartesianVector(vec[0], vec[1], vec[2]); 
   }
 
 
@@ -55,8 +49,8 @@ namespace sensormath {
    *
    * @return double Returns the Euclidean distance
    */
-  double distance(CartesianPoint point1,
-                  CartesianPoint point2) {
+  double distance(CartesianPoint& point1,
+                  CartesianPoint& point2) {
     vec point1Vector = cartesianToVec(point1);
     vec point2Vector = cartesianToVec(point2);
     vec distanceVector = point1Vector - point2Vector; 
@@ -64,9 +58,25 @@ namespace sensormath {
   }
 
 
+  // Calculate the distance between two CartesianVectors (copy of above with different type) 
+  double distance(CartesianVector& point1,
+                  CartesianVector& point2) {
+    vec point1Vector = cartesianToVec(point1);
+    vec point2Vector = cartesianToVec(point2);
+    vec distanceVector = point1Vector - point2Vector; 
+    return as_scalar(norm(distanceVector));
+  }
+
+
+
   // Calculates the angle between two vectors
   double angle(CartesianVector ray1, CartesianVector ray2) {
-    return acos(norm_dot(cartesianToVec(ray1), cartesianToVec(ray2)));
+    if (approx_equal(cartesianToVec(ray1), cartesianToVec(ray2),
+        "absdiff", 1e-4)) {
+      return 0.0; 
+    }
+
+    return acos(norm_dot(cartesianToVec(ray1), cartesianToVec(ray2))); 
   }
 
 
