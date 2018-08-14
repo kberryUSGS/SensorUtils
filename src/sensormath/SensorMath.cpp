@@ -14,12 +14,6 @@ namespace sensormath {
   }
 
 
-  // cartesian point -> arma::vec
-  vec cartesianToVec(CartesianVector cartesianVec) {
-    return vec {cartesianVec.x, cartesianVec.y, cartesianVec.z}; 
-  }
-
-
   // arma::vec -> CartesianPoint
   CartesianVector vecToCartesian(vec vec) {
     return CartesianVector(vec[0], vec[1], vec[2]); 
@@ -56,17 +50,6 @@ namespace sensormath {
     vec distanceVector = point1Vector - point2Vector; 
     return as_scalar(norm(distanceVector));
   }
-
-
-  // Calculate the distance between two CartesianVectors (copy of above with different type) 
-  double distance(CartesianVector& point1,
-                  CartesianVector& point2) {
-    vec point1Vector = cartesianToVec(point1);
-    vec point2Vector = cartesianToVec(point2);
-    vec distanceVector = point1Vector - point2Vector; 
-    return as_scalar(norm(distanceVector));
-  }
-
 
 
   // Calculates the angle between two vectors
