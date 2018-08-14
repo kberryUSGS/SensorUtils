@@ -36,7 +36,7 @@ TEST(imageToVec, image) {
 
 TEST(vecToImage, image) {
   arma::vec armaPoint{1.0, 2.0, 3.0}; 
-  ImagePoint vecToImage(armaPoint); 
+  ImagePoint image = vecToImage(armaPoint); 
   EXPECT_DOUBLE_EQ(1.0, image.sample);
   EXPECT_DOUBLE_EQ(2.0, image.line);
   EXPECT_DOUBLE_EQ(3.0, image.band);
