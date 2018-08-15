@@ -18,5 +18,5 @@ if (NOT TARGET gtest)
       set_source_files_properties(${_source} PROPERTIES GENERATED 1)
   endforeach()
 
-  add_library(gtest ${GOOGLETEST_SOURCES})
+  add_library(gtest SHARED ${GOOGLETEST_SOURCES})
 endif()
