@@ -1,4 +1,5 @@
 #include "SensorUtils.h"
+#include "SensorMath.h"
 
 #include <cfloat>
 #include <cmath>
@@ -106,7 +107,7 @@ double PhaseAngle(const std::vector<double> &observerBodyFixedPosition,
  * @return [RightAscension, Declination] in Radians
  */
 vector <double> computeRADec(const vector<double> rectangularCoords) {
-  vector<double> radiusLatLong = rect2lat(rectangularCoords);
+  vector<double> radiusLatLong = sensormath::rect2lat(rectangularCoords);
 
   vector<double> RADec {radiusLatLong[2],radiusLatLong[1]};
   if (RADec[0] <0.0) {
