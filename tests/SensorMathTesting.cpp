@@ -52,9 +52,19 @@ TEST(vecToCartesian, vec) {
 }
 
 
-/**
- * Test distance() function.
- */
+TEST(angle, zero) {
+  CartesianVector zero(0.0, 0.0, 0.0);
+  EXPECT_NEAR(0.0, sensormath::angle(zero, zero),1e-4);   
+}
+
+
+TEST(angle, orthogonal) {
+  CartesianVector ray1(1.0, 2.0, 0.0);
+  CartesianVector ray2(2.0, -1.0, 10.0);
+  EXPECT_NEAR(M_PI/2, sensormath::angle(ray1, ray2),1e-4);   
+}
+
+
 TEST(distance, simpleDistance) {
   // Easy hand-calculation: sqrt(1^2 + 2^2 + 2^2) ==> sqrt(9) ==> 3
   CartesianPoint fartherPoint(10, 10, 10);
@@ -71,16 +81,38 @@ TEST(distance, zero) {
 }
 
 
-TEST(angle, zero) {
-  CartesianVector zero(0.0, 0.0, 0.0);
-  EXPECT_NEAR(0.0, sensormath::angle(zero, zero),1e-4);   
+TEST(dot, simple) {
+  CartesianVector v1(1.0, 2.0, 3.0);
+  CartesianVector v2(-1.0, 2.0, 3.0);
+  EXPECT_DOUBLE_EQ(12.0, sensormath::dot(v1, v2));
 }
 
 
-TEST(angle, orthogonal) {
-  CartesianVector ray1(1.0, 2.0, 0.0);
-  CartesianVector ray2(2.0, -1.0, 10.0);
-  EXPECT_NEAR(M_PI/2, sensormath::angle(ray1, ray2),1e-4);   
+TEST(normalize, simple) {
+  CartesianVector v(9.0, 9.0, 9.0);
+  CartesianVector unit = sensormath::normalize(v);
+  EXPECT_DOUBLE_EQ(1.0/sqrt(3.0), unit.x);
+  EXPECT_DOUBLE_EQ(1.0/sqrt(3.0), unit.y);
+  EXPECT_DOUBLE_EQ(1.0/sqrt(3.0), unit.z);
+}
+
+
+TEST(normalize, zero) {
+  CartesianVector zero(0.0, 0.0, 0.0);
+  CartesianVector unit = sensormath::normalize(zero);
+  EXPECT_DOUBLE_EQ(0.0, unit.x);
+  EXPECT_DOUBLE_EQ(0.0, unit.y);
+  EXPECT_DOUBLE_EQ(0.0, unit.z);
+}
+
+
+TEST(subtract, simple) {
+  CartesianVector v1(1.0, 2.0, 3.0);
+  CartesianVector v2(3.0, 2.0, 1.0);
+  CartesianVector difference = sensormath::subtract(v1, v2);
+  EXPECT_DOUBLE_EQ(-2.0, difference.x);
+  EXPECT_DOUBLE_EQ(0.0, difference.y);
+  EXPECT_DOUBLE_EQ(2.0, difference.z);
 }
 
 

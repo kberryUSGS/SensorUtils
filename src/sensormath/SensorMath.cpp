@@ -32,6 +32,17 @@ namespace sensormath {
   }
 
 
+  // Calculates the angle between two vectors
+  double angle(CartesianVector ray1, CartesianVector ray2) {
+    if (approx_equal(cartesianToVec(ray1), cartesianToVec(ray2),
+        "absdiff", 1e-4)) {
+      return 0.0; 
+    }
+
+    return acos(norm_dot(cartesianToVec(ray1), cartesianToVec(ray2))); 
+  }
+
+
   /**
    * Computes the Euclidean distance between two CartesianPoints in the units they are provided 
    * in.  
@@ -52,14 +63,43 @@ namespace sensormath {
   }
 
 
-  // Calculates the angle between two vectors
-  double angle(CartesianVector ray1, CartesianVector ray2) {
-    if (approx_equal(cartesianToVec(ray1), cartesianToVec(ray2),
-        "absdiff", 1e-4)) {
-      return 0.0; 
-    }
+  /**
+   * Compute the dot product of two vectors.
+   *
+   * @param vector1 The first CartesianVector.
+   * @param vector2 The second CartesianVector.
+   *
+   * @return double Returns the computed dot product.
+   */
+  double dot(CartesianVector vector1, CartesianVector vector2) {
+    return arma::dot(cartesianToVec(vector1), cartesianToVec(vector2));
+  }
 
-    return acos(norm_dot(cartesianToVec(ray1), cartesianToVec(ray2))); 
+
+  /**
+   * Normalizes a vector to a unit vector.
+   *
+   * @param vector The CartesianVector to normalize.
+   *
+   * @return CartesianVector Returns the normalized vector (unit vector).
+   */
+  CartesianVector normalize(CartesianVector vector) {
+    vec normalizedVector = normalise(cartesianToVec(vector));
+    return vecToCartesian(normalizedVector);
+  }
+
+  /**
+   * Subtracts two vectors.
+   *
+   * @param vector1 The CartesianVector to subtract from (minuend).
+   * @param vector2 The CartesianVector being subtracted (subtrahend).
+   *
+   * @return CartesianVector Returns the difference between vector1 and vector2.
+   */
+  CartesianVector subtract(CartesianVector vector1, CartesianVector vector2) {
+    vec minuend = cartesianToVec(vector1);
+    vec subtrahend = cartesianToVec(vector2);
+    return vecToCartesian(minuend - subtrahend);
   }
 
 
