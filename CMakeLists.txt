@@ -31,13 +31,14 @@ find_package(Threads)
 # This is the linear algebra library we are using
 find_package(Armadillo REQUIRED)
 
+set(SENSORUTILS_INCLUDE_DIRS  "${CMAKE_CURRENT_SOURCE_DIR}/include/sensorcore"
+                              "${CMAKE_CURRENT_SOURCE_DIR}/include/sensormath"
+                              "${CMAKE_CURRENT_SOURCE_DIR}/include/sensormodel"
+                              "${CMAKE_CURRENT_SOURCE_DIR}/include/shapemodel")
+
 target_include_directories(sensorutils
                            PUBLIC
-                           include/sensorcore/
-                           include/sensormath/
-                           include/sensormodel/
-                           include/shapemodel/
-                           include/
+                           ${SENSORUTILS_INCLUDE_DIRS}
                            ${ARMADILLO_INCLUDE_DIRS}
 )
 
@@ -47,8 +48,9 @@ target_link_libraries(sensorutils PUBLIC
                       ${ARMADILLO_LIBRARIES})
 
 install(TARGETS sensorutils
-    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-    PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/sensorutils)
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR})
+    
+install(DIRECTORY ${SENSORUTILS_INCLUDE_DIRS} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/sensorutils)
 
 
 
