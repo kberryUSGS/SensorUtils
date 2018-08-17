@@ -5,7 +5,7 @@ set(COVERAGE OFF CACHE BOOL "Coverage")
 
 # Link runSensorUtilsTests with what we want to test and the GTest and pthread library
 
-add_executable(runSensorUtilsTests SensorCoreTesting.cpp SensorMathTesting.cpp ShapeModelTesting.cpp)
+add_executable(runSensorUtilsTests SensorCoreTesting.cpp SensorMathTesting.cpp SensorModelTesting.cpp ShapeModelTesting.cpp)
 
 target_link_libraries(runSensorUtilsTests PUBLIC sensorutils ${GTEST_LIBRARIES} ${GTEST_MAIN_LIBRARIES} pthread)
 
