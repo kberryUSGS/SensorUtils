@@ -14,7 +14,9 @@ add_library(sensorutils SHARED
             src/sensormath/SensorMath.cpp
             src/shapemodel/BiAxialEllipsoid.cpp            
             src/shapemodel/ShapeModel.cpp
-            src/shapemodel/ShapeModelFactory.cpp)
+            src/shapemodel/ShapeModelFactory.cpp
+	    src/sensormodel/CSMSensorModel.cpp
+	    src/sensormodel/SensorModelFactory.cpp)
 
 if(COVERAGE)
     target_compile_options(sensorutils PRIVATE --coverage -O0)

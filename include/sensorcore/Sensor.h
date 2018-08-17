@@ -6,6 +6,7 @@
 
 #include "sensorcore.h"
 
+#include "SensorModel.h"
 #include "ShapeModel.h"
 
 class Sensor {
@@ -19,9 +20,11 @@ class Sensor {
     double phaseAngle(const CartesianPoint &groundPoint);
     double phaseAngle(const ImagePoint &imagePoint);
     double rightAscension(const CartesianVector &);
+    
+    CartesianPoint illuminatorPosition(ImagePoint imagePoint); 
 
   private:
-    // SensorModel *m_sensorModel;
+    std::unique_ptr<SensorModel> m_sensorModel;
     std::unique_ptr<ShapeModel> m_shapeModel;
 };
 
