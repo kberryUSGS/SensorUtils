@@ -50,17 +50,13 @@ double Sensor::emissionAngle(const ImagePoint &imagePoint) {
    *
    * @author Kaj Williams
    *
-   * @param observerBodyFixedPosition  Three dimensional position of the observer,
-   *                                   in the coordinate system of the target body.
-   * @param illuminatorBodyFixedPosition Three dimensional position for the illuminator,
-   *                                     in the body-fixed coordinate system.
-   * @param surfaceIntersection Three dimensional position for the ground (surface intersection) point,
-   *                                     in the body-fixed coordinate system.
+   * @param groundPoint The point on the body to calculate the phase angle at 
+   *  
    * @return @b double Phase angle, in radians.
    */
 double Sensor::phaseAngle(const CartesianPoint &groundPoint) {
-/*  ImagePoint input = groundPoint; 
-  CartesianPoint imagePoint = m_sensorModel->groundToImage(input); 
+  CartesianPoint input = groundPoint; 
+  ImagePoint imagePoint = m_sensorModel->groundToImage(input); 
   CartesianPoint sensorPosition = m_sensorModel->getSensorPosition(imagePoint); 
   CartesianPoint sunPosition = illuminatorPosition(imagePoint);
 
@@ -73,11 +69,24 @@ double Sensor::phaseAngle(const CartesianPoint &groundPoint) {
   if(cos_angle >= 1.0) return 0.0;
   if(cos_angle <= -1.0) return M_PI;
 
-  return acos(cos_angle);*/
-  return 0.0;
+  return acos(cos_angle);
 }
 
 
+/**
+   * Computes and returns phase angle, in radians, given the positions of the
+   * observer and illuminator.
+   *
+   * Phase Angle: The angle between the vector from the surface intersection point to
+   * the observer (usually the spacecraft) and the vector from the surface intersection
+   * point to the illuminator (usually the sun).
+   *
+   * @author Kaj Williams 
+   *
+   * @param imagePoint The point on the image to calculate the phaseAngle at. 
+   *  
+   * @return @b double Phase angle, in radians.
+   */
 double Sensor::phaseAngle(const ImagePoint &imagePoint) {
   ImagePoint input = imagePoint; 
   CartesianPoint groundPoint = m_sensorModel->imageToGround(input); 

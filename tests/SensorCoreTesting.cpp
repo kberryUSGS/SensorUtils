@@ -25,8 +25,8 @@ TEST(emissionAngle, placeHodor) {
 
 TEST(phaseAngle, placeHodor) {
   Sensor sensor("test", "test");
-  EXPECT_DOUBLE_EQ(0.0, sensor.phaseAngle(CartesianPoint()));
-  EXPECT_DOUBLE_EQ(0.0, sensor.phaseAngle(ImagePoint()));
+  EXPECT_NEAR(M_PI/2, sensor.phaseAngle(CartesianPoint()), 1e-4);
+  EXPECT_NEAR(M_PI/2, sensor.phaseAngle(ImagePoint()), 1e-4);
 }
 
 TEST(rightAscension, AlphaCentauri) {
