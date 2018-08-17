@@ -11,8 +11,10 @@ set(COVERAGE OFF CACHE BOOL "Coverage")
 
 add_library(sensorutils SHARED
             src/sensorcore/Sensor.cpp
-            src/sensormath/SensorMath.cpp            
-            src/shapemodel/ShapeModel.cpp)
+            src/sensormath/SensorMath.cpp
+            src/shapemodel/BiAxialEllipsoid.cpp            
+            src/shapemodel/ShapeModel.cpp
+            src/shapemodel/ShapeModelFactory.cpp)
 
 if(COVERAGE)
     target_compile_options(sensorutils PRIVATE --coverage -O0)
