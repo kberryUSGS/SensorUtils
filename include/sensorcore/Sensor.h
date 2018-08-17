@@ -1,9 +1,12 @@
 #ifndef Sensor_h
 #define Sensor_h
 
+#include <memory>
 #include <string>
 
 #include "sensorcore.h"
+
+#include "ShapeModel.h"
 
 class Sensor {
 
@@ -19,7 +22,7 @@ class Sensor {
 
   private:
     // SensorModel *m_sensorModel;
-    // ShapeModel *m_shapeModel;
+    std::unique_ptr<ShapeModel> m_shapeModel;
 };
 
 #endif

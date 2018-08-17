@@ -6,8 +6,11 @@
 
 #include "sensorcore.h"
 #include "SensorMath.h"
+#include "ShapeModel.h"
+#include "ShapeModelFactory.h"
 
 Sensor::Sensor(const std::string &metaData, const std::string &sensorName) {
+  m_shapeModel = ShapeModelFactory::create("test");
 }
 
 
